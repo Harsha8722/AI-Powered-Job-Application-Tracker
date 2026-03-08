@@ -26,6 +26,11 @@ public class User {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    private String phone;
+    private String college;
+    private String branch;
+    private Double cgpa;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -60,4 +65,12 @@ public class User {
     public void setJobApplications(List<JobApplication> jobApplications) { this.jobApplications = jobApplications; }
     public List<Resume> getResumes() { return resumes; }
     public void setResumes(List<Resume> resumes) { this.resumes = resumes; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public String getCollege() { return college; }
+    public void setCollege(String college) { this.college = college; }
+    public String getBranch() { return branch; }
+    public void setBranch(String branch) { this.branch = branch; }
+    public Double getCgpa() { return cgpa; }
+    public void setCgpa(Double cgpa) { this.cgpa = cgpa; }
 }

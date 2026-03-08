@@ -19,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/api/resume")
 @Tag(name = "Resume", description = "Resume upload endpoints")
 @SecurityRequirement(name = "bearerAuth")
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class ResumeController {
 
     @Autowired
