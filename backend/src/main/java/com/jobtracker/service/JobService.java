@@ -84,6 +84,22 @@ public class JobService {
         jobRepository.delete(job);
     }
 
+    public JobApplicationResponse updateStatus(Long id, String statusStr, String email) {
+        User user = authService.getUserByEmail(email);
+        JobApplication job = jobRepository.findByIdAndUserId(id, user.getId())
+                .orElseThrow(() -> new RuntimeException("Job application not found"));
+        try {
+            JobApplication.ApplicationStatus status = JobApplication.ApplicationStatus.valueOf(statusStr.toUpperCase());
+            job.setStatus(status);
+            JobApplication saved = jobRepository.save(job);
+            notificationService.createNotification(user, "Status Updated",
+                "Application for " + job.getRole() + " at " + job.getCompany() + " is now " + status);
+            return mapToResponse(saved);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid status: " + statusStr);
+        }
+    }
+
     public DashboardStats getDashboardStats(String email) {
         User user = authService.getUserByEmail(email);
         Long userId = user.getId();

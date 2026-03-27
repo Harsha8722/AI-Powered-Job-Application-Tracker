@@ -47,8 +47,12 @@ public class SecurityConfig {
                     "/v3/api-docs/**"
                 ).permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                // Allow all authenticated users to GET job postings (admin posts, users view)
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/admin/job-postings/**").authenticated()
+                .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/api/admin/job-postings/*/apply").authenticated()
+                // Admin-only for everything else under /api/admin/
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/jobs/**", "/api/resume/**", "/api/notifications/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/jobs/**", "/api/resume/**", "/api/notifications/**", "/api/ai/**").authenticated()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

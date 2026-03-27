@@ -69,6 +69,20 @@ public class JobController {
         }
     }
 
+    @PatchMapping("/{id}/status")
+    @Operation(summary = "Update job application status")
+    public ResponseEntity<?> updateStatus(@PathVariable Long id,
+                                          @RequestBody Map<String, String> body,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            String statusStr = body.get("status");
+            JobApplicationResponse response = jobService.updateStatus(id, statusStr, userDetails.getUsername());
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping("/dashboard")
     @Operation(summary = "Get dashboard statistics")
     public ResponseEntity<DashboardStats> getDashboardStats(@AuthenticationPrincipal UserDetails userDetails) {

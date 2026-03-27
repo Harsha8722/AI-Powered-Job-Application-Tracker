@@ -44,6 +44,11 @@ public class ResumeService {
             throw new RuntimeException("Only PDF and DOCX files are allowed");
         }
 
+        // Validate file size (10MB)
+        if (file.getSize() > 10 * 1024 * 1024) {
+            throw new RuntimeException("File size must be under 10MB");
+        }
+
         // Create upload directory
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
@@ -87,6 +92,30 @@ public class ResumeService {
                 .orElseThrow(() -> new RuntimeException("Resume not found"));
         resume.setAnalysisResult(result);
         resumeRepository.save(resume);
+    }
+
+    public void deleteResume(Long resumeId, String email) {
+        User user = authService.getUserByEmail(email);
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new RuntimeException("Resume not found"));
+
+        // Ensure the resume belongs to the requesting user
+        if (!resume.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Access denied: you can only delete your own resumes");
+        }
+
+        // Delete the physical file
+        try {
+            File file = new File(resume.getFilePath());
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            // Log but don't fail if file deletion fails
+        }
+
+        // Delete DB record
+        resumeRepository.deleteById(resumeId);
     }
 
     private ResumeResponse mapToResponse(Resume resume) {

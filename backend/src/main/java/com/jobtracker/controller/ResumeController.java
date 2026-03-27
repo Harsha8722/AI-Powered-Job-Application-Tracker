@@ -41,4 +41,16 @@ public class ResumeController {
     public ResponseEntity<List<ResumeResponse>> getResumes(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(resumeService.getUserResumes(userDetails.getUsername()));
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a resume by ID")
+    public ResponseEntity<?> deleteResume(@PathVariable Long id,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            resumeService.deleteResume(id, userDetails.getUsername());
+            return ResponseEntity.ok(Map.of("message", "Resume deleted successfully"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

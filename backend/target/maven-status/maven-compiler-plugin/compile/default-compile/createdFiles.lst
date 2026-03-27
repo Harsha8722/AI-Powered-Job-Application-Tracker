@@ -1,4 +1,5 @@
 com\jobtracker\config\DataLoader.class
+com\jobtracker\repository\JobPostingRepository.class
 com\jobtracker\model\JobApplication$ApplicationStatus.class
 com\jobtracker\repository\ResumeRepository.class
 com\jobtracker\controller\AuthController.class
@@ -32,9 +33,11 @@ com\jobtracker\service\NotificationService.class
 com\jobtracker\JobTrackerApplication.class
 com\jobtracker\dto\RegisterRequest.class
 com\jobtracker\dto\AdminDashboardStats.class
+com\jobtracker\model\JobPosting.class
 com\jobtracker\security\JwtUtil.class
 com\jobtracker\model\Resume.class
 com\jobtracker\service\JobService.class
 com\jobtracker\service\AIService.class
+com\jobtracker\controller\JobPostingController.class
 com\jobtracker\dto\JobApplicationResponse.class
 com\jobtracker\controller\NotificationController.class

@@ -22,10 +22,16 @@ public class AIController {
     private AIService aiService;
 
     @PostMapping("/analyze")
-    @Operation(summary = "Analyze the latest uploaded resume using AI")
-    public ResponseEntity<?> analyzeResume(@AuthenticationPrincipal UserDetails userDetails) {
+    @Operation(summary = "Analyze a specific resume by ID using AI")
+    public ResponseEntity<?> analyzeResume(
+            @RequestBody(required = false) Map<String, Object> body,
+            @AuthenticationPrincipal UserDetails userDetails) {
         try {
-            Map<String, Object> result = aiService.analyzeResume(userDetails.getUsername());
+            Long resumeId = null;
+            if (body != null && body.get("resumeId") != null) {
+                resumeId = Long.valueOf(body.get("resumeId").toString());
+            }
+            Map<String, Object> result = aiService.analyzeResume(userDetails.getUsername(), resumeId);
             return ResponseEntity.ok(result);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -34,14 +40,18 @@ public class AIController {
 
     @PostMapping("/match")
     @Operation(summary = "Match resume against a job description")
-    public ResponseEntity<?> matchResume(@RequestBody Map<String, String> request,
+    public ResponseEntity<?> matchResume(@RequestBody Map<String, Object> request,
                                          @AuthenticationPrincipal UserDetails userDetails) {
         try {
-            String jobDescription = request.get("jobDescription");
+            String jobDescription = (String) request.get("jobDescription");
             if (jobDescription == null || jobDescription.isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Job description is required"));
             }
-            Map<String, Object> result = aiService.matchResume(jobDescription, userDetails.getUsername());
+            Long resumeId = null;
+            if (request.get("resumeId") != null) {
+                resumeId = Long.valueOf(request.get("resumeId").toString());
+            }
+            Map<String, Object> result = aiService.matchResume(jobDescription, userDetails.getUsername(), resumeId);
             return ResponseEntity.ok(result);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

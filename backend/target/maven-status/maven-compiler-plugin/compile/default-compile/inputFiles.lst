@@ -8,10 +8,13 @@ C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\contro
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\exception\GlobalExceptionHandler.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\security\JwtUtil.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\config\SimpleCorsFilter.java
+C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\controller\JobPostingController.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\dto\AdminDashboardStats.java
+C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\repository\JobPostingRepository.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\dto\DashboardStats.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\service\JobService.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\service\ResumeService.java
+C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\model\JobPosting.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\dto\ResumeResponse.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\model\User.java
 C:\Users\hhars\Desktop\Job simulator\backend\src\main\java\com\jobtracker\dto\AuthResponse.java
